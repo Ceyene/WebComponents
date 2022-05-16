@@ -6,6 +6,7 @@ class Tooltip extends HTMLElement {
 		super(); // accessing HTMLElement methods and properties
 		this._tooltipContainer; //initializing as undefined
 		this._tooltipText = 'This is some plain text'; //initializing as plain text;
+		this.attachShadow({ mode: 'open' }); //attaching shadow DOM to this element
 	}
 
 	//manipulating DOM
@@ -22,7 +23,8 @@ class Tooltip extends HTMLElement {
 		tooltipIcon.addEventListener('mouseenter', this._showTooltip.bind(this));
 		tooltipIcon.addEventListener('mouseleave', this._hideTooltip.bind(this));
 		//adding the span as a child of the element where is inserted
-		this.appendChild(tooltipIcon);
+		//first, access the shadow root
+		this.shadowRoot.appendChild(tooltipIcon);
 		//adding some styles
 		this.style.position = 'relative';
 	}
@@ -38,11 +40,13 @@ class Tooltip extends HTMLElement {
 		this._tooltipContainer.style.color = 'white';
 		this._tooltipContainer.style.position = 'absolute';
 		this._tooltipContainer.style.zIndex = '10';
-		this.appendChild(this._tooltipContainer); //this points to the tooltip element
+		//first, access the shadow root
+		this.shadowRoot.appendChild(this._tooltipContainer); //this points to the tooltip element
 	}
 
 	_hideTooltip() {
-		this.removeChild(this._tooltipContainer);
+		//first, access the shadow root
+		this.shadowRoot.removeChild(this._tooltipContainer);
 	}
 }
 
