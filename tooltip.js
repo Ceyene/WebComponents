@@ -36,6 +36,8 @@ class Tooltip extends HTMLElement {
 	// name -> starts with _ as a convention for methods only used from inside the class ('private' in other languages)
 	//they can be used from the outside, technically, but as a convention you shouldn't
 	_showTooltip() {
+		this._tooltipContainer = document.createElement('div');
+		this._tooltipContainer.textContent = this._tooltipText;
 		//adding some styles
 		this._tooltipContainer.style.backgroundColor = 'black';
 		this._tooltipContainer.style.color = 'white';
