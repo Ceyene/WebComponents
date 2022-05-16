@@ -7,6 +7,8 @@ class Tooltip extends HTMLElement {
 		this._tooltipContainer; //initializing as undefined
 		this._tooltipText = 'This is some plain text'; //initializing as plain text;
 		this.attachShadow({ mode: 'open' }); //attaching shadow DOM to this element
+		const template = document.querySelector('#tooltip-template'); //getting our template
+		this.shadowRoot.appendChild(template.textContent.cloneNode(true)); //access the shadowRoot and append the template as a child with all its children
 	}
 
 	//manipulating DOM
@@ -33,8 +35,8 @@ class Tooltip extends HTMLElement {
 	// name -> starts with _ as a convention for methods only used from inside the class ('private' in other languages)
 	//they can be used from the outside, technically, but as a convention you shouldn't
 	_showTooltip() {
-		this._tooltipContainer = document.createElement('div');
-		this._tooltipContainer.textContent = this._tooltipText;
+		const tooltipIcon = this.shadowRoot.querySelector('span'); //getting the span inside our template
+
 		//adding some styles
 		this._tooltipContainer.style.backgroundColor = 'black';
 		this._tooltipContainer.style.color = 'white';
