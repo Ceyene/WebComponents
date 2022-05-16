@@ -5,12 +5,15 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
 		<title>Web Components</title>
+		<style>
+			div {
+				border: 2px solid orange;
+			}
+		</style>
 		<script src="tooltip.js"></script>
 	</head>
 	<body>
-		<template id="tooltip-template">
-			<slot>Some default</slot> <span> (?)</span>
-		</template>
+		<template id="tooltip-template"> </template>
 		<p>
 			<uc-tooltip text="Web Components is a set of standards"
 				>Web Components</uc-tooltip
