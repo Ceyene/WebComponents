@@ -68,6 +68,13 @@ class Modal extends HTMLElement {
                 </section>
             </div>
         `;
+		//getting access to the slot content
+		const slots = this.shadowRoot.querySelectorAll('slot');
+		//listening the "slotchange" event
+		slots[1].addEventListener('slotchange', (event) => {
+			//analize content from our slot
+			console.dir(slots[1].assignedNodes()); //see the content projected into the slot
+		});
 	}
 
 	//reacting to attribute changes
