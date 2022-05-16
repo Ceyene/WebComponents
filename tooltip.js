@@ -4,8 +4,8 @@ class Tooltip extends HTMLElement {
 	//method executed by JS whenever this class is instantiated
 	constructor() {
 		super(); // accessing HTMLElement methods and properties
-		this._tooltipContainer; //initializing as undefined
 		this._tooltipIcon; //initializing as undefined
+		this._tooltipVisible = false;
 		this._tooltipText = 'This is some plain text'; //initializing as plain text;
 		this.attachShadow({ mode: 'open' }); //attaching shadow DOM to this element
 		this.shadowRoot.innerHTML = `
@@ -94,19 +94,31 @@ class Tooltip extends HTMLElement {
 		this._tooltipIcon.removeEventListener('mouseleave', this._hideTooltip);
 	}
 
+	//logic to update the DOM (adding, removing elements)
+	_render() {
+		let tooltipContainer;
+		if (this._tooltipVisible) {
+			tooltipContainer = document.createElement('div');
+			tooltipContainer.textContent = this._tooltipText;
+			//first, access the shadow root
+			this.shadowRoot.appendChild(this._tooltipContainer); //this points to the tooltip element
+		} else {
+			//first, access the shadow root
+			this.shadowRoot.removeChild(this._tooltipContainer);
+		}
+	}
+
 	//methods to be executed when event occurs
 	// name -> starts with _ as a convention for methods only used from inside the class ('private' in other languages)
 	//they can be used from the outside, technically, but as a convention you shouldn't
 	_showTooltip() {
-		this._tooltipContainer = document.createElement('div');
-		this._tooltipContainer.textContent = this._tooltipText;
-		//first, access the shadow root
-		this.shadowRoot.appendChild(this._tooltipContainer); //this points to the tooltip element
+		this._tooltipVisible = true;
+		this._render();
 	}
 
 	_hideTooltip() {
-		//first, access the shadow root
-		this.shadowRoot.removeChild(this._tooltipContainer);
+		this._tooltipVisible = false;
+		this._render();
 	}
 }
 
