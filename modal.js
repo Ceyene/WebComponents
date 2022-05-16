@@ -60,6 +60,23 @@ class Modal extends HTMLElement {
             </div>
         `;
 	}
+
+	//listening changes in attributes
+	attributeChangedCallback(name, oldValue, newValue) {
+		if (name === 'opened') {
+			if (this.hasAttribute('opened')) {
+				this.shadowRoot.querySelector('#backdrop').style.opacity = 1;
+				this.shadowRoot.querySelector('#backdrop').style.pointerEvents = 'all';
+				this.shadowRoot.querySelector('#modal').style.opacity = 1;
+				this.shadowRoot.querySelector('#modal').style.pointerEvents = 'all';
+			}
+		}
+	}
+
+	//listening attribute changes
+	static get observedAttributes() {
+		return ['opened'];
+	}
 }
 
 customElements.define('uc-modal', Modal);
