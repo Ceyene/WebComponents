@@ -11,9 +11,13 @@ class Tooltip extends HTMLElement {
     <style>
 			div {
 				background-color: black;
-        color: white;
-        position: absolute;
-        z-index: 10;
+        		color: white;
+        		position: absolute;
+				top: 1rem;
+				left: 0.75rem;
+        		z-index: 10;
+				border-radius: 3px;
+				box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.26);
 			}
 
 			::slotted(.highlight) {
@@ -21,7 +25,7 @@ class Tooltip extends HTMLElement {
 			}
 
 			:host(.important) {
-				padding: 0.5rem;
+				padding: 1rem;
 				background-color: var(--color-primary, #ccc);
 			}
 
