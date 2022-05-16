@@ -25,6 +25,10 @@ class Tooltip extends HTMLElement {
 				background-color: lightblue;
 			}
 
+			:host-context(p) {
+				font-weight: 600;
+			}
+
 			.icon {
 				background: black;
 				color: white;
