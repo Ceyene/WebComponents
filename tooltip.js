@@ -20,7 +20,7 @@ class Tooltip extends HTMLElement {
 				background-color: gold;
 			}
 
-			:host {
+			:host(.important) {
 				padding: 0.5rem;
 				background-color: lightblue;
 			}
