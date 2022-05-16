@@ -82,6 +82,11 @@ class Modal extends HTMLElement {
 
 		cancelButton.addEventListener('click', this._cancel.bind(this));
 		confirmButton.addEventListener('click', this._confirm.bind(this));
+
+		//listening custom events
+		cancelButton.addEventListener('cancel', () => {
+			console.log('Canceled inside the component');
+		});
 	}
 
 	//reacting to attribute changes
@@ -113,8 +118,12 @@ class Modal extends HTMLElement {
 	}
 
 	//cancelling operation
-	_cancel() {
+	//we get the event object from the addEventListener function where this is going to be used
+	_cancel(event) {
 		this.hide();
+		//creating and dispatching custom event
+		const cancelEvent = new Event('cancel');
+		event.target.dispatchEvent(cancelEvent);
 	}
 
 	//confirming operation
