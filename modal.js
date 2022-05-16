@@ -2,6 +2,7 @@ class Modal extends HTMLElement {
 	constructor() {
 		super();
 		this.attachShadow({ mode: 'open' });
+		this.isOpen = false;
 		this.shadowRoot.innerHTML = `
             <style>
                 #backdrop {
@@ -67,6 +68,21 @@ class Modal extends HTMLElement {
                 </section>
             </div>
         `;
+	}
+
+	//reacting to attribute changes
+	attributeChangedCallback(name, oldValue, newValue) {
+		if (name === 'opened') {
+			if (this.hasAttribute('opened')) {
+				this.isOpen = true;
+			} else {
+				this.isOpen = false;
+			}
+		}
+	}
+	//listening attribute changes
+	static get observedAttributes() {
+		return ['opened'];
 	}
 
 	//showing modal
