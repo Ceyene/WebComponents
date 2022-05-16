@@ -19,9 +19,23 @@ class Tooltip extends HTMLElement {
 			::slotted(.highlight) {
 				background-color: gold;
 			}
+
+			:host {
+				padding: 0.5rem;
+				background-color: lightblue;
+			}
+
+			.icon {
+				background: black;
+				color: white;
+				font-weight: 600;
+				padding: 0.35rem 0.25rem;
+				text-align: center;
+				border-radius: 50%;
+			}
 		</style>
       <slot>Some default</slot> 
-      <span> (?)</span>
+      <span class="icon"> (?)</span>
     `; //adding HTML template to our shadowRoot
 	}
 
