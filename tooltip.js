@@ -22,7 +22,7 @@ class Tooltip extends HTMLElement {
 
 			:host(.important) {
 				padding: 0.5rem;
-				background-color: lightblue;
+				background-color: var(--color-primary, #ccc);
 			}
 
 			:host-context(p) {
