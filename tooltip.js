@@ -5,6 +5,7 @@ class Tooltip extends HTMLElement {
 	constructor() {
 		super(); // accessing HTMLElement methods and properties
 		this._tooltipContainer; //initializing as undefined
+		this._tooltipIcon; //initializing as undefined
 		this._tooltipText = 'This is some plain text'; //initializing as plain text;
 		this.attachShadow({ mode: 'open' }); //attaching shadow DOM to this element
 		this.shadowRoot.innerHTML = `
@@ -55,10 +56,16 @@ class Tooltip extends HTMLElement {
 			this._tooltipText = this.getAttribute('text');
 		}
 		//getting the span inside our template
-		const tooltipIcon = this.shadowRoot.querySelector('span');
+		this._tooltipIcon = this.shadowRoot.querySelector('span');
 		//adding event listeners
-		tooltipIcon.addEventListener('mouseenter', this._showTooltip.bind(this));
-		tooltipIcon.addEventListener('mouseleave', this._hideTooltip.bind(this));
+		this._tooltipIcon.addEventListener(
+			'mouseenter',
+			this._showTooltip.bind(this)
+		);
+		this._tooltipIcon.addEventListener(
+			'mouseleave',
+			this._hideTooltip.bind(this)
+		);
 		//adding the span as a child of the element where is inserted
 		//first, access the shadow root
 		this.shadowRoot.appendChild(tooltipIcon);
@@ -79,6 +86,12 @@ class Tooltip extends HTMLElement {
 	//listening attribute changes
 	static get observedAttributes() {
 		return ['text']; //return an array of attributes you are going to be listening for changes
+	}
+
+	//clearing up (event listeners, requests, etc)
+	disconnectedCallback() {
+		this._tooltipIcon.removeEventListener('mouseenter', this._showTooltip);
+		this._tooltipIcon.removeEventListener('mouseleave', this._hideTooltip);
 	}
 
 	//methods to be executed when event occurs
