@@ -5,10 +5,17 @@ class Tooltip extends HTMLElement {
 	constructor() {
 		super(); // accessing HTMLElement methods and properties
 		this._tooltipContainer; //initializing as undefined
+		this._tooltipText = 'This is some plain text'; //initializing as plain text;
 	}
 
 	//manipulating DOM
 	connectedCallback() {
+		//using attributes
+		if (this.hasAttribute('text')) {
+			//getting the 'text' html element's attribute and assigning it to tooltipText
+			this._tooltipText = this.getAttribute('text');
+		}
+		//creating span element
 		const tooltipIcon = document.createElement('span');
 		tooltipIcon.textContent = ' (?)';
 		//adding event listeners
@@ -23,7 +30,7 @@ class Tooltip extends HTMLElement {
 	//they can be used from the outside, technically, but as a convention you shouldn't
 	_showTooltip() {
 		this._tooltipContainer = document.createElement('div');
-		this._tooltipContainer.textContent = 'This is the tooltip text';
+		this._tooltipContainer.textContent = this._tooltipText;
 		this.appendChild(this._tooltipContainer); //this points to the tooltip element
 	}
 
