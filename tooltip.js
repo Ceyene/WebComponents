@@ -66,6 +66,16 @@ class Tooltip extends HTMLElement {
 		this.style.position = 'relative';
 	}
 
+	//observing attribute changes
+	attributeChangedCallback(name, oldValue, newValue) {
+		console.log(name, oldValue, newValue);
+	}
+
+	//listening attribute changes
+	static get observedAttributes() {
+		return ['text']; //return an array of attributes you are going to be listening for changes
+	}
+
 	//methods to be executed when event occurs
 	// name -> starts with _ as a convention for methods only used from inside the class ('private' in other languages)
 	//they can be used from the outside, technically, but as a convention you shouldn't
