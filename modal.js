@@ -84,9 +84,9 @@ class Modal extends HTMLElement {
 		confirmButton.addEventListener('click', this._confirm.bind(this));
 
 		//listening custom events
-		cancelButton.addEventListener('cancel', () => {
-			console.log('Canceled inside the component');
-		});
+		// cancelButton.addEventListener('cancel', () => {
+		// 	console.log('Canceled inside the component');
+		// });
 	}
 
 	//reacting to attribute changes
@@ -121,14 +121,17 @@ class Modal extends HTMLElement {
 	//we get the event object from the addEventListener function where this is going to be used
 	_cancel(event) {
 		this.hide();
-		//creating and dispatching custom event
-		const cancelEvent = new Event('cancel');
+		//creating and dispatching custom event -> longer version
+		const cancelEvent = new Event('cancel', { bubbles: true, composed: true });
 		event.target.dispatchEvent(cancelEvent);
 	}
 
 	//confirming operation
 	_confirm() {
 		this.hide();
+		//creating and dispatching custom event -> shorter version
+		const confirmEvent = new Event('confirm');
+		this.dispatchEvent(confirmEvent); //this points to the target element, not triggers inside the shadow DOM
 	}
 }
 
