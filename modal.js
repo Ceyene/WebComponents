@@ -63,8 +63,8 @@ class Modal extends HTMLElement {
                     <slot></slot>
                 </section>
                 <section id='actions'>
-                    <button>Cancel</button>
-                    <button>Okay</button>
+                    <button id='cancel-btn'>Cancel</button>
+                    <button id='confirm-btn'>Okay</button>
                 </section>
             </div>
         `;
@@ -75,6 +75,13 @@ class Modal extends HTMLElement {
 			//analize content from our slot
 			console.dir(slots[1].assignedNodes()); //see the content projected into the slot
 		});
+
+		//adding listeners to our buttons in the shadow DOM
+		const cancelButton = this.shadowRoot.querySelector('#cancel-btn');
+		const confirmButton = this.shadowRoot.querySelector('#confirm-btn');
+
+		cancelButton.addEventListener('click', this._cancel.bind(this));
+		confirmButton.addEventListener('click', this._confirm.bind(this));
 	}
 
 	//reacting to attribute changes
@@ -95,6 +102,24 @@ class Modal extends HTMLElement {
 	//showing modal
 	open() {
 		this.setAttribute('opened', '');
+	}
+
+	//hiding modal
+	hide() {
+		if (this.hasAttribute('opened')) {
+			this.removeAttribute('opened');
+			this.isOpen = false;
+		}
+	}
+
+	//cancelling operation
+	_cancel() {
+		this.hide();
+	}
+
+	//confirming operation
+	_confirm() {
+		this.hide();
 	}
 }
 
