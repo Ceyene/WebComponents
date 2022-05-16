@@ -16,13 +16,9 @@ class Modal extends HTMLElement {
                     opacity: 0;
                     pointer-events: none;
                 }
-                :host([opened]) #backdrop {
-                    opacity: 1;
-                    pointer-events: all;
-                }
                 #modal {
                     position: fixed;
-                    top: 15vh;
+                    top: 10vh;
                     left: 25%;
                     width: 50%;
                     z-index: 100;
@@ -35,16 +31,22 @@ class Modal extends HTMLElement {
                     padding: 1rem;
                     opacity: 0;
                     pointer-events: none;
+                    transition: all 0.3s ease-out;
                 }
+                :host([opened]) #backdrop,
                 :host([opened]) #modal {
                     opacity: 1;
                     pointer-events: all;
+                }
+                :host([opened]) #modal {
+                    top: 15vh;
                 }
                 header {
                     padding: 1rem;
                 }
                 ::slotted(h1) {
                     font-size: 1.25rem;
+                    margin: 0;
                 }
                 #actions {
                     border-top: 1px solid #ccc;
@@ -76,12 +78,14 @@ class Modal extends HTMLElement {
 			console.dir(slots[1].assignedNodes()); //see the content projected into the slot
 		});
 
-		//adding listeners to our buttons in the shadow DOM
+		//adding listeners to our buttons (and the backdrop) in the shadow DOM
 		const cancelButton = this.shadowRoot.querySelector('#cancel-btn');
 		const confirmButton = this.shadowRoot.querySelector('#confirm-btn');
+		const backdrop = this.shadowRoot.querySelector('#backdrop');
 
 		cancelButton.addEventListener('click', this._cancel.bind(this));
 		confirmButton.addEventListener('click', this._confirm.bind(this));
+		backdrop.addEventListener('click', this._cancel.bind(this));
 
 		//listening custom events
 		// cancelButton.addEventListener('cancel', () => {
